@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.IO.MemoryMappedFiles;
 
 namespace HDF5.NET
 {
@@ -39,9 +40,12 @@ namespace HDF5.NET
         internal static H5File OpenCore(string filePath, FileMode fileMode, FileAccess fileAccess, FileShare fileShare, bool deleteOnClose = false)
         {
             var absoluteFilePath = System.IO.Path.GetFullPath(filePath);
-            var stream = System.IO.File.Open(absoluteFilePath, fileMode, fileAccess, fileShare);
+            var fileStream = System.IO.File.Open(absoluteFilePath, fileMode, fileAccess, fileShare);
 
-            return H5File.OpenCore(stream, absoluteFilePath, deleteOnClose);
+            var mmf = MemoryMappedFile.CreateFromFile(fileStream, null, 0, MemoryMappedFileAccess.Read, HandleInheritability.None, leaveOpen: true);
+            var mmfStream = mmf.CreateViewStream(0, 0, MemoryMappedFileAccess.Read);
+
+            return H5File.OpenCore(mmfStream, absoluteFilePath, deleteOnClose);
         }
 
         private static H5File OpenCore(Stream stream, string absoluteFilePath, bool deleteOnClose = false)
