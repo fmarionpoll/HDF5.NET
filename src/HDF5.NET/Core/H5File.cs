@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.IO.MemoryMappedFiles;
 
@@ -41,11 +42,10 @@ namespace HDF5.NET
         {
             //var absoluteFilePath = System.IO.Path.GetFullPath(filePath);
             //var stream = System.IO.File.Open(absoluteFilePath, fileMode, fileAccess, fileShare);
-
             //return H5File.OpenCore(stream, absoluteFilePath, deleteOnClose);
+            Console.WriteLine("open file with memory mapped access");
             var absoluteFilePath = System.IO.Path.GetFullPath(filePath);
             var fileStream = System.IO.File.Open(absoluteFilePath, fileMode, fileAccess, fileShare);
-
             var mmf = MemoryMappedFile.CreateFromFile(fileStream, null, 0, MemoryMappedFileAccess.Read, HandleInheritability.None, leaveOpen: true);
             var mmfStream = mmf.CreateViewStream(0, 0, MemoryMappedFileAccess.Read);
 
