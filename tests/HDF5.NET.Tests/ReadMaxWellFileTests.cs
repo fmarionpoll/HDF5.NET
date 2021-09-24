@@ -18,12 +18,13 @@ namespace HDF5.NET.Tests
         [Fact]
         public void OpenAndReadH5MaxwellFileTest()
         {
-            var localFilePath = "E:\\2021 MaxWell\\Trace_20210715_16_54_48_1mM(+++).raw.h5";
+           // var localFilePath = "E:\\2021 MaxWell\\Trace_20210715_16_54_48_1mM(+++).raw.h5";          //HDD
+            var localFilePath = "C:\\Users\\fred\\Downloads\\Trace_20210715_16_54_48_1mM(+++).raw.h5"; //SSD
             if (!OpenReadMaxWellFile(localFilePath))
                 throw new Exception();
 
             var electrodeProperties = new ElectrodeProperties(0, 683, 0, 0);
-            var result1 = ReadAll_OneElectrodeAsInt(electrodeProperties);
+            var unused = ReadAll_OneElectrodeAsInt(electrodeProperties);
             //var result2 = ReadAll_OneElectrodeAsIntParallel(electrodeProperties);
         }
 
