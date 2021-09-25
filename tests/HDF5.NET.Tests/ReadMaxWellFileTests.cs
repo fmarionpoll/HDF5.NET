@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace HDF5.NET.Tests
 {
     public class ReadH5MaxwellFileTests
     {
-        private readonly ITestOutputHelper _testOutputHelper;
         private static H5File Root { get; set; }
         public record ElectrodeProperties(
             int Electrode,
